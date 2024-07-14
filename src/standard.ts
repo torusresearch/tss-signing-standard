@@ -61,7 +61,7 @@ const runMPCSigning = async () => {
 
   // If there are additional shares that need to be inserted into the Threshold Key, this will then be done here.
 
-  // This is needed if manual_sync === false, otherwise it has no effect
+  // This is needed if manual_sync === true, otherwise it has no effect
   await tb.syncLocalMetadataTransitions().catch((err)=>{
     throw new Error(`meta-data error:${err}`);
   });
