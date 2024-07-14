@@ -115,8 +115,8 @@ const runMPCSigning = async () => {
   const denormalisedShare = dklsCoeff.mul(userShare).umod(ec.curve.n);
   const share = Buffer.from(denormalisedShare.toString(16, 64), "hex").toString("base64");
 
-  // f) Derive the coefficients that the servers will use for their own retrieved shares using the nodeIndexes
-  // and the userTssIndex 
+  // f) Derive the coefficients that the servers will use for their own retrieved shares using the nodeIndexes,
+  // serverIndex and the userTssIndex 
   const serverCoeffs = {};
   for (let i = 0; i < participatingServerDKGIndexes.length; i++) {
     const serverIndex = participatingServerDKGIndexes[i];
