@@ -8,11 +8,6 @@ export function getEcCrypto(): any {
   return new EC.ec("secp256k1");
 }
 
-export function ecPoint(p: { x: string, y: string }): any {
-  const ec = getEcCrypto();
-  return ec.keyFromPublic({ x: p.x.padStart(64, "0"), y: p.y.padStart(64, "0") }).getPublic();
-}
-
 const jwtPrivateKey = `-----BEGIN PRIVATE KEY-----\nMEECAQAwEwYHKoZIzj0CAQYIKoZIzj0DAQcEJzAlAgEBBCCD7oLrcKae+jVZPGx52Cb/lKhdKxpXjl9eGNa1MlY57A==\n-----END PRIVATE KEY-----`;
 export const generateIdToken = (email: string) => {
   const alg = "ES256";
