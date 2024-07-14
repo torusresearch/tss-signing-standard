@@ -1,0 +1,48 @@
+{
+  "name": "tss-signing-standard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && webpack",
+    "serve": "webpack serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "assert": "^2.1.0",
+    "crypto-browserify": "^3.12.0",
+    "html-webpack-plugin": "^5.6.0",
+    "https-browserify": "^1.0.0",
+    "os-browserify": "^0.3.0",
+    "process": "^0.11.10",
+    "source-map-loader": "^5.0.0",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "ts-loader": "^9.5.1",
+    "url": "^0.11.3",
+    "vm-browserify": "^1.1.2",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  },
+  "dependencies": {
+    "@tkey-mpc/common-types": "^9.2.0",
+    "@tkey-mpc/default": "^9.2.1",
+    "@tkey-mpc/service-provider-torus": "^9.2.0",
+    "@tkey-mpc/storage-layer-torus": "^9.2.1",
+    "@toruslabs/constants": "^14.0.0",
+    "@toruslabs/fnd-base": "^14.0.0",
+    "@toruslabs/tss-client": "^2.3.3",
+    "@toruslabs/tss-lib": "^2.3.0",
+    "bn.js": "^5.2.1",
+    "eccrypto": "^1.1.6",
+    "elliptic": "^6.5.5",
+    "jsrsasign": "^11.1.0",
+    "keccak256": "^1.0.6",
+    "socket.io-client": "^4.7.5"
+  }
+}
