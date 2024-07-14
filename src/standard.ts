@@ -166,7 +166,7 @@ const runMPCSigning = async () => {
     throw new Error("Invalid signature found");
   }
 
-  client.log(`pubkey, ${JSON.stringify(finalTssPubKey)}`);
+  client.log(`pubkey, 04${tssPubKey.getX().toString(16, 64)}${tssPubKey.getY().toString(16,64)}`);
   client.log(`msgHash: 0x${msgHash.toString("hex")}`);
   client.log(`signature: 0x${signature.r.toString(16, 64)}${signature.s.toString(16, 64)}${new BN(27 + signature.recoveryParam).toString(16)}`);
 };
