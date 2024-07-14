@@ -115,7 +115,7 @@ const runMPCSigning = async () => {
   const denormalisedShare = dklsCoeff.mul(userShare).umod(ec.curve.n);
   const share = Buffer.from(denormalisedShare.toString(16, 64), "hex").toString("base64");
 
-  // f) Derive the coefficients that the servers will use for their own retrieved shares using the nodeIndexes,
+  // g) Derive the coefficients that the servers will use for their own retrieved shares using the nodeIndexes,
   // serverIndex and the userTssIndex 
   const serverCoeffs = {};
   for (let i = 0; i < participatingServerDKGIndexes.length; i++) {
@@ -123,13 +123,13 @@ const runMPCSigning = async () => {
     serverCoeffs[serverIndex] = getDKLSCoeff(false, participatingServerDKGIndexes, userTSSIndex, serverIndex).toString("hex");
   }
 
-  // g) Initialize the client using all the necessary variables.
+  // h) Initialize the client using all the necessary variables.
   const client = new Client(session, clientIndex, partyIndexes, endpoints, sockets, share, finalTssPubKey, true, tssImportUrl);
   client.log = (...args: unknown[]) => {
     log(...args)
   };
 
-  // h) Perform setup and precompute via the precompute route, all parties including the client will follow these steps.
+  // i) Perform setup and precompute via the precompute route, all parties including the client will follow these steps.
   // NOTE:
   // Preferably upgrade the client to minimum version of 2.3.3, since infinite promises are possible in older versions.
   // If signing fails and the servers logs show failure on setting up the signer with message ~puid_seed, the share being given to the client is wrong.
@@ -138,23 +138,23 @@ const runMPCSigning = async () => {
   // Remember that the client sends the configuration to the servers on which they will operate, it is CRITICAL to get this correct.
   client.precompute(tss, { signatures, server_coeffs: serverCoeffs });
 
-  // i) Wait till client reports it is ready
+  // j) Wait till client reports it is ready
   await client.ready();
 
-  // j) Collect all signature fragments from the servers and combine it with the one of the client to produce the final signature
+  // k) Collect all signature fragments from the servers and combine it with the one of the client to produce the final signature
   const signature = await client.sign(tss, msgHash.toString("base64"), true, msg, "keccak256", { signatures });
 
-  // k) Checks to ensure the signature is valid (the client should already do this internally, but sanity check is good).
+  // l) Checks to ensure the signature is valid (the client should already do this internally, but sanity check is good).
   const pubk = ec.recoverPubKey(hexToDecimal(msgHash), signature, signature.recoveryParam, "hex");
   const passed = ec.verify(msgHash, signature, pubk);
 
-  // l) Tell the client to cleanup for this session, this will also inform the servers to cleanup for this session
+  // m) Tell the client to cleanup for this session, this will also inform the servers to cleanup for this session
   // This should always be called on failure (though the severs will perform automatic cleanup after some time if not)
   await client.cleanup(tss, { signatures }).catch((err)=>{
     throw new Error(`error during cleanup: ${err}`);
   });
 
-  // m) Disconnect client sockets
+  // n) Disconnect client sockets
   sockets.map((soc)=>{
     if (soc && soc.connected) {
       console.log(`closing socket: ${soc.id}`)
