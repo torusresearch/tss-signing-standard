@@ -149,7 +149,7 @@ const runMPCSigning = async () => {
   const passed = ec.verify(msgHash, signature, pubk);
 
   // m) Tell the client to cleanup for this session, this will also inform the servers to cleanup for this session
-  // This should always be called, even on failure (though the severs will perform automatic cleanup after some time if not)
+  // This should always be called, even on failure (though the servers will perform automatic cleanup after some time if not)
   await client.cleanup(tss, { signatures }).catch((err)=>{
     throw new Error(`error during cleanup: ${err}`);
   });
