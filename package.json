@@ -40,7 +40,7 @@
     "@toruslabs/tss-lib": "^2.3.0",
     "bn.js": "^5.2.1",
     "eccrypto": "^1.1.6",
-    "elliptic": "^6.5.5",
+    "elliptic": "^6.6.0",
     "jsrsasign": "^11.1.0",
     "keccak256": "^1.0.6",
     "socket.io-client": "^4.7.5"
